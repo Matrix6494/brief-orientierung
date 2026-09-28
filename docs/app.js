@@ -406,8 +406,8 @@
 
   function heroIcon() {
     return '<div class="hero-icon" aria-hidden="true">' +
-      '<svg width="40" height="40" viewBox="0 0 48 48" fill="none"><rect x="8" y="10" width="32" height="28" rx="3" fill="#e8f0ee" stroke="#245656" stroke-width="2"/>' +
-      '<path d="M8 16h32" stroke="#245656" stroke-width="2"/><circle cx="36" cy="12" r="8" fill="#245656"/></svg></div>'
+      '<svg width="40" height="40" viewBox="0 0 48 48" fill="none"><rect x="8" y="10" width="32" height="28" rx="2" fill="#e6f4fa" stroke="#009fe3" stroke-width="2"/>' +
+      '<path d="M8 16h32" stroke="#009fe3" stroke-width="2"/><circle cx="36" cy="12" r="8" fill="#009fe3"/></svg></div>'
   }
 
   function keyMessages(deadlineEnd) {
