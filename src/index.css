@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-warm-50: #faf8f5;
+  --color-warm-100: #f3efe8;
+  --color-warm-200: #e8e0d4;
+  --color-warm-700: #4a4036;
+  --color-warm-800: #3d3429;
+  --color-warm-900: #2a231c;
+  --color-muted: #5c4f42;
+  --color-primary: #245656;
+  --color-primary-hover: #1a4545;
+  --color-primary-light: #e8f0ee;
+  --color-accent: #a93226;
+  --color-accent-hover: #922b21;
+  --color-accent-light: #fdecea;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  @apply bg-warm-50 text-warm-900 antialiased;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  height: 100%;
+  overflow: hidden;
+  background-image: radial-gradient(ellipse 80% 50% at 50% -10%, var(--color-primary-light) 0%, transparent 70%);
+}
+
+#root {
+  height: 100dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.text-muted {
+  color: var(--color-muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

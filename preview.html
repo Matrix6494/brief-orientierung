@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Understand your letter (Preview)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            warm: { 50: '#faf8f5', 100: '#f3efe8', 200: '#e8e0d4', 800: '#3d3429', 900: '#2a231c' },
+            primary: { DEFAULT: '#245656', hover: '#1a4545', light: '#e8f0ee' },
+            accent: { DEFAULT: '#a93226', hover: '#922b21', light: '#fdecea' },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { font-size: 16px; }
+    body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; min-height: 100dvh; background-image: radial-gradient(ellipse 80% 50% at 50% -10%, #e8f0ee 0%, transparent 70%); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    body { line-height: 1.6; }
+  </style>
+</head>
+<body class="bg-warm-50 text-warm-900 antialiased">
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect, useMemo, useRef, useCallback } = React;
+
+    const DEADLINE_DAYS = 30;
+    const STORAGE_KEY = 'brief-orientierung-frist';
+    const LETTER_TYPES = [
+      { id: 'mietzinserhohung', label: 'Rent increase' },
+      { id: 'kuendigung', label: 'Eviction notice' },
+      { id: 'betreibung', label: 'Debt collection' },
+      { id: 'versicherung', label: 'Insurance claim denied' },
+      { id: 'anderes', label: 'Other' },
+    ];
+
+    function addDays(date, days) {
+      const r = new Date(date);
+      r.setDate(r.getDate() + days);
+      return r;
+    }
+    function formatDate(date) {
+      return date.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+    function parseDateInput(value) {
+      if (!value) return null;
+      const [y, m, d] = value.split('-').map(Number);
+      const date = new Date(y, m - 1, d);
+      if (date.getFullYear() !== y || date.getMonth() !== m - 1 || date.getDate() !== d) return null;
+      return date;
+    }
+    function toDateInputValue(date) {
+      return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+    }
+    function saveDeadline(receiptDate, deadlineEnd) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ receiptDate: receiptDate.toISOString(), deadlineEnd: deadlineEnd.toISOString() }));
+    }
+    function loadDeadline() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const d = JSON.parse(raw);
+        return { receiptDate: new Date(d.receiptDate), deadlineEnd: new Date(d.deadlineEnd) };
+      } catch { return null; }
+    }
+    function downloadIcs({ title, startDate, description }) {
+      const pad = n => String(n).padStart(2, '0');
+      const fmt = d => `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}`;
+      const ics = ['BEGIN:VCALENDAR','VERSION:2.0','BEGIN:VEVENT',`DTSTART;VALUE=DATE:${fmt(startDate)}`,`SUMMARY:${title}`,`DESCRIPTION:${description}`,`END:VEVENT`,'END:VCALENDAR'].join('\r\n');
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' }));
+      a.download = 'frist-mietzinserhoehung.ics';
+      a.click();
+    }
+
+    function TrustNotice() {
+      return (
+        <footer className="mt-auto border-t border-warm-200 bg-white/60 px-5 py-5 backdrop-blur-sm">
+          <div className="mx-auto max-w-md space-y-2 text-center text-sm leading-relaxed text-warm-800/80">
+            <p className="font-medium text-warm-900">Your data stays on your device.</p>
+            <p>Your photo is not saved or sent anywhere. This site offers guidance, not legal advice.</p>
+          </div>
+        </footer>
+      );
+    }
+
+    function DeadlineBanner({ deadlineEnd, receiptDate, generic }) {
+      if (!deadlineEnd && !generic) return null;
+      return (
+        <div className="sticky top-0 z-10 border-b border-accent/20 bg-accent-light px-4 py-3 text-center">
+          {deadlineEnd ? (
+            <>
+              <p className="text-sm font-semibold text-accent">Deadline: {formatDate(deadlineEnd)}</p>
+              {receiptDate && <p className="text-sm text-warm-800/80">{DEADLINE_DAYS} days from receipt ({formatDate(receiptDate)})</p>}
+            </>
+          ) : (
+            <p className="text-sm font-semibold text-accent">You have {DEADLINE_DAYS} days from when you received the letter.</p>
+          )}
+        </div>
+      );
+    }
+
+    function BackButton({ onClick }) {
+      return (
+        <button type="button" onClick={onClick} className="mb-6 flex min-h-12 items-center gap-2 text-base font-medium text-warm-800 hover:underline">
+          <span aria-hidden="true">←</span> Back
+        </button>
+      );
+    }
+    function PrimaryButton({ children, onClick, className = '', variant = 'primary' }) {
+      const bg = variant === 'accent' ? 'bg-accent hover:bg-accent-hover' : 'bg-primary hover:bg-primary-hover';
+      return (
+        <button type="button" onClick={onClick} className={`flex min-h-14 w-full items-center justify-center rounded-2xl px-6 py-4 text-lg font-semibold text-white active:scale-[0.98] ${bg} ${className}`}>
+          {children}
+        </button>
+      );
+    }
+    function SecondaryButton({ children, onClick, className = '' }) {
+      return (
+        <button type="button" onClick={onClick} className={`flex min-h-14 w-full items-center justify-center rounded-2xl border-2 border-warm-800/20 bg-white px-6 py-4 text-lg font-semibold text-warm-900 hover:border-warm-800/40 active:scale-[0.98] ${className}`}>
+          {children}
+        </button>
+      );
+    }
+    function TextLink({ children, onClick }) {
+      return (
+        <button type="button" onClick={onClick} className="min-h-12 text-base text-warm-800 underline underline-offset-4 hover:text-warm-900">
+          {children}
+        </button>
+      );
+    }
+
+    function StartScreen({ onUpload, onChooseType }) {
+      const steps = [
+        { n: 1, title: 'Show your letter', text: 'Take a photo or choose the letter type.' },
+        { n: 2, title: 'Understand', text: 'We tell you what matters.' },
+        { n: 3, title: 'Next step', text: 'You see what you can do.' },
+      ];
+      return (
+        <div className="flex min-h-dvh flex-col">
+          <main className="flex flex-1 flex-col px-5 py-8">
+            <div className="mx-auto w-full max-w-md">
+              <div className="mb-8 flex h-20 w-20 items-center justify-center rounded-3xl bg-primary-light" aria-hidden="true">
+                <svg width="40" height="40" viewBox="0 0 48 48" fill="none"><rect x="8" y="10" width="32" height="28" rx="3" fill="#e8f0ee" stroke="#2d6a6a" strokeWidth="2"/><path d="M8 16h32" stroke="#2d6a6a" strokeWidth="2"/><circle cx="36" cy="12" r="8" fill="#2d6a6a"/></svg>
+              </div>
+              <p className="mb-3 text-lg text-warm-800">An official letter can feel unsettling. That is understandable.</p>
+              <h1 className="mb-5 text-3xl font-bold leading-tight">We help you understand it.</h1>
+              <p className="mb-8 text-lg text-warm-800">In plain language. Step by step. No legal jargon.</p>
+              <section className="mb-10 rounded-2xl bg-white p-5 shadow-sm ring-1 ring-warm-200">
+                <h2 className="mb-4 text-base font-semibold">How it works</h2>
+                <ol className="space-y-4">
+                  {steps.map(s => (
+                    <li key={s.n} className="flex gap-4">
+                      <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-light text-sm font-bold text-primary">{s.n}</span>
+                      <div><p className="font-semibold">{s.title}</p><p className="text-base text-warm-800">{s.text}</p></div>
+                    </li>
+                  ))}
+                </ol>
+                <p className="mt-4 text-sm text-warm-800/70">Takes about 2 minutes.</p>
+              </section>
+              <PrimaryButton onClick={onUpload}>Get started</PrimaryButton>
+              <p className="mt-3 text-center text-sm text-warm-800/70">Take a photo or choose a letter type</p>
+              <div className="mt-5 text-center"><TextLink onClick={onChooseType}>Choose letter type instead</TextLink></div>
+              <p className="mt-10 text-center text-base text-warm-800/80">Many people feel unsure about official letters. You do not have to figure this out alone.</p>
+            </div>
+          </main>
+          <TrustNotice />
+        </div>
+      );
+    }
+
+    function CaptureScreen({ onBack, onPhotoSelected, onTypeSelected }) {
+      const fileRef = useRef(null);
+      return (
+        <div className="flex min-h-dvh flex-col">
+          <main className="flex-1 px-5 py-8">
+            <div className="mx-auto w-full max-w-md">
+              <BackButton onClick={onBack} />
+              <p className="mb-2 text-base text-warm-800">Good, you are on your way.</p>
+              <h1 className="mb-3 text-2xl font-bold">How would you like to continue?</h1>
+              <p className="mb-8 text-lg text-warm-800">Take a photo of the letter, or choose the letter type if you prefer not to use a photo.</p>
+              <input ref={fileRef} type="file" accept="image/*" capture="environment" className="sr-only" id="photo-input"
+                onChange={e => { const f = e.target.files?.[0]; if (f) onPhotoSelected(URL.createObjectURL(f)); }} />
+              <PrimaryButton onClick={() => fileRef.current?.click()}>Take a photo or upload</PrimaryButton>
+              <div className="my-10 flex items-center gap-4"><div className="h-px flex-1 bg-warm-200" /><span className="text-sm text-warm-800/60">or</span><div className="h-px flex-1 bg-warm-200" /></div>
+              <h2 className="mb-4 text-xl font-semibold">What kind of letter did you receive?</h2>
+              <ul className="space-y-3">
+                {LETTER_TYPES.map(t => (
+                  <li key={t.id}>
+                    <button type="button" onClick={() => onTypeSelected(t.id)} className="flex min-h-14 w-full items-center rounded-2xl border-2 border-warm-200 bg-white px-5 py-4 text-left text-lg font-medium hover:border-accent/40 hover:bg-warm-50">
+                      {t.label}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </main>
+          <TrustNotice />
+        </div>
+      );
+    }
+
+    function RecognitionScreen({ photoPreview, receiptDate, deadlineEnd, onBack, onReceiptDateChange, onGoActions, onGoExplain }) {
+      const [dateInput, setDateInput] = useState(receiptDate ? toDateInputValue(receiptDate) : '');
+      const [savedHint, setSavedHint] = useState(false);
+      return (
+        <div className="flex min-h-dvh flex-col">
+          <DeadlineBanner deadlineEnd={deadlineEnd} receiptDate={receiptDate} generic />
+          <main className="flex-1 px-5 py-8">
+            <div className="mx-auto w-full max-w-md">
+              <BackButton onClick={onBack} />
+              {photoPreview && (
+                <div className="mb-6 overflow-hidden rounded-2xl border border-warm-200">
+                  <img src={photoPreview} alt="Preview of your letter" className="max-h-40 w-full object-cover" />
+                </div>
+              )}
+              <p className="mb-2 text-sm font-semibold uppercase tracking-wide text-[#5c4f42]">Detected</p>
+              <h1 className="mb-6 text-3xl font-bold leading-tight">This is a rent increase notice.</h1>
+              <section aria-labelledby="key-info" className="mb-8">
+                <h2 id="key-info" className="sr-only">Key information</h2>
+                <div className="grid grid-cols-1 gap-3 min-[420px]:grid-cols-2">
+                  <article className="rounded-2xl border-2 border-primary/40 bg-primary-light p-5">
+                    <p className="mb-2 text-sm font-bold uppercase tracking-wide text-primary">Good to know</p>
+                    <p className="text-lg font-semibold leading-relaxed">This is not the final word. You can have the increase reviewed for free.</p>
+                  </article>
+                  <article className="rounded-2xl border-2 border-accent/40 bg-accent-light p-5">
+                    <p className="mb-2 text-sm font-bold uppercase tracking-wide text-accent">You can still respond</p>
+                    <p className="text-lg font-semibold leading-relaxed">You have {DEADLINE_DAYS} days from when you received the letter to take action.</p>
+                    {deadlineEnd && <p className="mt-2 text-lg font-bold text-accent">Deadline: {formatDate(deadlineEnd)}</p>}
+                  </article>
+                </div>
+              </section>
+              <label htmlFor="receipt-date" className="mb-2 block text-base font-medium">When did you receive the letter? (optional)</label>
+              <input id="receipt-date" type="date" value={dateInput} max={toDateInputValue(new Date())}
+                onChange={e => { setDateInput(e.target.value); onReceiptDateChange(parseDateInput(e.target.value)); setSavedHint(false); }}
+                className="mb-4 min-h-14 w-full rounded-2xl border-2 border-warm-200 bg-white px-4 text-base" />
+              {receiptDate && deadlineEnd && (
+                <SecondaryButton onClick={() => { saveDeadline(receiptDate, deadlineEnd); downloadIcs({ title: 'Deadline: contest rent increase', startDate: deadlineEnd, description: 'Last day to contest' }); setSavedHint(true); }} className="mb-2">
+                  Save deadline to calendar
+                </SecondaryButton>
+              )}
+              {savedHint && <p className="mb-6 text-sm text-warm-800">Deadline saved. Calendar file downloaded.</p>}
+              <div className="mt-8 space-y-4">
+                <PrimaryButton variant="accent" onClick={onGoActions}>What can I do?</PrimaryButton>
+                <SecondaryButton onClick={onGoExplain}>What does it say exactly?</SecondaryButton>
+              </div>
+            </div>
+          </main>
+          <TrustNotice />
+        </div>
+      );
+    }
+
+    function ActionPathScreen({ deadlineEnd, receiptDate, onBack, onGoExplain }) {
+      const steps = [
+        { n: 1, title: 'Get it reviewed', text: 'A rent increase must be justified. General reasons like rising costs alone are often not enough.' },
+        { n: 2, title: 'Watch the deadline', text: 'You have 30 days from receipt to contest the increase. It costs nothing.' },
+        { n: 3, title: 'Get help', text: 'Contact the tenants\' association or the tenancy mediation authority in Canton Lucerne. Both can help you for free.' },
+      ];
+      const contacts = [
+        { name: 'Tenants\' Association', sub: 'Lucerne region', addr: 'Pilatusstrasse 29, 6003 Lucerne', tel: '041 210 33 44', link: 'https://www.schweizerischer-mieterschutz.ch/', linkLabel: 'schweizerischer-mieterschutz.ch' },
+        { name: 'Tenancy Mediation Authority', sub: 'Canton of Lucerne', addr: 'Murbacherstrasse 31, 6002 Lucerne', tel: '041 228 50 50', link: 'https://gerichte.lu.ch/organisation/schlichtungsbehoerden/miete_pacht', linkLabel: 'gerichte.lu.ch' },
+      ];
+      return (
+        <div className="flex min-h-dvh flex-col">
+          <DeadlineBanner deadlineEnd={deadlineEnd} receiptDate={receiptDate} generic />
+          <main className="flex-1 px-5 py-8">
+            <div className="mx-auto w-full max-w-md">
+              <BackButton onClick={onBack} />
+              <h1 className="mb-8 text-2xl font-bold">What can I do?</h1>
+              <ol className="mb-10 space-y-6">
+                {steps.map(s => (
+                  <li key={s.n} className="flex gap-4">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-lg font-bold text-white">{s.n}</span>
+                    <div><h2 className="mb-1 text-lg font-semibold">{s.title}</h2><p className="text-base leading-relaxed text-warm-800">{s.text}</p></div>
+                  </li>
+                ))}
+              </ol>
+              <h2 className="mb-4 text-xl font-semibold">Where to get help</h2>
+              <div className="mb-10 space-y-4">
+                {contacts.map(c => (
+                  <article key={c.name} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-warm-200">
+                    <h3 className="text-lg font-bold">{c.name}</h3>
+                    <p className="mb-4 text-sm text-warm-800/70">{c.sub}</p>
+                    <p className="text-base"><span className="text-sm text-warm-800/60">Address: </span>{c.addr}</p>
+                    <p className="text-base mt-2"><span className="text-sm text-warm-800/60">Phone: </span><a href={`tel:${c.tel.replace(/\s/g,'')}`} className="text-accent underline">{c.tel}</a></p>
+                    <p className="text-base mt-2"><span className="text-sm text-warm-800/60">Online: </span><a href={c.link} target="_blank" rel="noopener noreferrer" className="text-accent underline">{c.linkLabel}</a></p>
+                  </article>
+                ))}
+              </div>
+              <div className="mb-8 rounded-2xl bg-warm-100 p-5 text-center">
+                <p className="text-lg font-medium leading-relaxed">You are not alone with this, and you do not have to sign anything right away.</p>
+              </div>
+              <SecondaryButton onClick={onGoExplain}>What does it say exactly?</SecondaryButton>
+            </div>
+          </main>
+          <TrustNotice />
+        </div>
+      );
+    }
+
+    function ExplainPathScreen({ deadlineEnd, receiptDate, onBack, onGoActions }) {
+      const sections = [
+        { title: 'New rent amount', text: 'The amount you are being asked to pay from now on.', tip: null },
+        { title: 'Effective from', text: 'When the new rent should apply. Usually from the next termination date.', tip: null },
+        { title: 'Reason given', text: 'The reason stated in the letter.', tip: 'General reasons without proof are often contestable.' },
+        { title: 'Right to contest', text: 'Your right to object. This section says you can contest within 30 days and where to send it.', tip: 'Check that an address or deadline is clearly stated.' },
+      ];
+      return (
+        <div className="flex min-h-dvh flex-col">
+          <DeadlineBanner deadlineEnd={deadlineEnd} receiptDate={receiptDate} generic />
+          <main className="flex-1 px-5 py-8">
+            <div className="mx-auto w-full max-w-md">
+              <BackButton onClick={onBack} />
+              <h1 className="mb-3 text-2xl font-bold">What does it say exactly?</h1>
+              <p className="mb-8 text-lg text-warm-800">How to read the letter, section by section.</p>
+              <div className="mb-10 space-y-4">
+                {sections.map(s => (
+                  <article key={s.title} className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-warm-200">
+                    <h2 className="mb-2 text-lg font-bold">{s.title}</h2>
+                    <p className="text-base leading-relaxed text-warm-800">{s.text}</p>
+                    {s.tip && <p className="mt-3 rounded-xl bg-accent-light px-4 py-3 text-base font-medium text-accent">Watch out: {s.tip}</p>}
+                  </article>
+                ))}
+              </div>
+              <PrimaryButton onClick={onGoActions}>So what can I do now?</PrimaryButton>
+            </div>
+          </main>
+          <TrustNotice />
+        </div>
+      );
+    }
+
+    function FallbackScreen({ onBack }) {
+      return (
+        <div className="flex min-h-dvh flex-col">
+          <main className="flex-1 px-5 py-8">
+            <div className="mx-auto w-full max-w-md">
+              <BackButton onClick={onBack} />
+              <h1 className="mb-4 text-2xl font-bold">We cannot identify this letter yet.</h1>
+              <p className="mb-8 text-lg text-warm-800">That is okay. There are places that can help with many kinds of letters. They offer support for free and in plain language.</p>
+              <article className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-warm-200">
+                <h2 className="mb-2 text-lg font-bold">General support service</h2>
+                <p className="mb-4 text-base text-warm-800">Contact a local advice centre. They can point you in the right direction. Many services are free or low cost.</p>
+                <p className="text-base"><span className="text-sm text-[#5c4f42]">Phone: </span><a href="tel:0800800800" className="text-accent underline">0800 800 800</a></p>
+                <p className="text-base mt-2"><span className="text-sm text-[#5c4f42]">Online: </span><a href="https://www.ch.ch" target="_blank" rel="noopener noreferrer" className="text-accent underline">ch.ch: find help</a></p>
+              </article>
+              <p className="mt-8 text-center text-base text-warm-800">You are not alone. There is always someone who can listen.</p>
+            </div>
+          </main>
+          <TrustNotice />
+        </div>
+      );
+    }
+
+    function App() {
+      const SCREENS = { START: 'start', CAPTURE: 'capture', RECOGNITION: 'recognition', ACTIONS: 'actions', EXPLAIN: 'explain', FALLBACK: 'fallback' };
+      const [screen, setScreen] = useState(SCREENS.START);
+      const [history, setHistory] = useState([SCREENS.START]);
+      const [photoPreview, setPhotoPreview] = useState(null);
+      const [receiptDate, setReceiptDate] = useState(null);
+
+      useEffect(() => { const s = loadDeadline(); if (s?.receiptDate) setReceiptDate(s.receiptDate); }, []);
+      const deadlineEnd = useMemo(() => receiptDate ? addDays(receiptDate, DEADLINE_DAYS) : null, [receiptDate]);
+
+      const navigate = useCallback(next => { setScreen(next); setHistory(h => [...h, next]); }, []);
+      const goBack = useCallback(() => {
+        setHistory(h => { if (h.length <= 1) return h; const n = h.slice(0, -1); setScreen(n[n.length - 1]); return n; });
+      }, []);
+
+      switch (screen) {
+        case SCREENS.START: return <StartScreen onUpload={() => navigate(SCREENS.CAPTURE)} onChooseType={() => navigate(SCREENS.CAPTURE)} />;
+        case SCREENS.CAPTURE: return <CaptureScreen onBack={goBack} onPhotoSelected={url => { setPhotoPreview(url); navigate(SCREENS.RECOGNITION); }} onTypeSelected={id => navigate(id === 'mietzinserhohung' ? SCREENS.RECOGNITION : SCREENS.FALLBACK)} />;
+        case SCREENS.RECOGNITION: return <RecognitionScreen photoPreview={photoPreview} receiptDate={receiptDate} deadlineEnd={deadlineEnd} onBack={goBack} onReceiptDateChange={setReceiptDate} onGoActions={() => navigate(SCREENS.ACTIONS)} onGoExplain={() => navigate(SCREENS.EXPLAIN)} />;
+        case SCREENS.ACTIONS: return <ActionPathScreen deadlineEnd={deadlineEnd} receiptDate={receiptDate} onBack={goBack} onGoExplain={() => navigate(SCREENS.EXPLAIN)} />;
+        case SCREENS.EXPLAIN: return <ExplainPathScreen deadlineEnd={deadlineEnd} receiptDate={receiptDate} onBack={goBack} onGoActions={() => navigate(SCREENS.ACTIONS)} />;
+        case SCREENS.FALLBACK: return <FallbackScreen onBack={goBack} />;
+        default: return null;
+      }
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
