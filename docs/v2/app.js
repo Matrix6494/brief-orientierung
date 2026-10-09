@@ -108,28 +108,31 @@
   ]
 
   const COPY = {
-    official: {
-      costHeadline: 'The notified rent increase amounts to CHF {yearly} per annum.',
-      costSub: 'That is CHF {monthly} more every month.',
-      countdown: 'The contestation period ends on {date}.',
-      countdownDays: 'Remaining period: {days} days.',
-      countdownOverdue: 'The contestation period has expired.',
-      receiptLabel: 'Date of receipt of the notification',
-      q1: 'When was the last previous adjustment of the rent?',
-      q2: 'Does the notification state the grounds for the increase?',
-      q3: 'Has the rent previously been reduced by the landlord?',
-      resultYellowTitle: 'Probably admissible',
-      resultYellowText: 'The increase may be formally compliant. A complimentary review remains advisable.',
-      resultOrangeTitle: 'Review recommended',
-      resultOrangeText: 'A review is recommended. Many notified increases are not fully substantiated.',
-      letterIntro: 'The draft below has been completed with the available data. Signature and dispatch remain your responsibility.',
-      costCta: 'Verify lawfulness in three questions',
-      costSkip: 'Examine the notification instead',
-      resultLetterCta: 'Prepare the contestation letter',
-      resultTourCta: 'Examine the notification first',
-      letterTitle: 'Your contestation letter',
-    },
     clear: {
+      startLead: 'An official letter can feel unsettling. That is understandable.',
+      startTitle: 'We help you understand it.',
+      startSub: 'In plain language. Section by section. No legal jargon.',
+      howTitle: 'How it works',
+      step1Title: 'Show your letter',
+      step1Text: 'Take a photo inside the frame.',
+      step2Title: 'Walk through sections',
+      step2Text: 'We guide you through each part of the form.',
+      step3Title: 'Next step',
+      step3Text: 'You see what you can do.',
+      takesTime: 'Takes about 3 minutes.',
+      getStarted: 'Get started',
+      startHint: 'Take a photo or choose a letter type',
+      chooseType: 'Choose letter type instead',
+      captureTitle: 'Photograph your letter',
+      captureLead: 'Place the whole letter inside the frame. You can also upload a photo from your gallery.',
+      cameraHint: 'Place the whole letter inside the frame',
+      takePhoto: 'Take photo',
+      uploadGallery: 'Upload from gallery',
+      orDivider: 'or',
+      letterTypeHeading: 'What kind of letter did you receive?',
+      continueExample: 'Continue with example form (no photo)',
+      scanTitle: 'Scanning your letter…',
+      scanSub: 'Finding the sections on your form',
       costHeadline: 'This increase costs you CHF {yearly} per year.',
       costSub: 'That\'s CHF {monthly} more every month.',
       countdown: 'You have until {date} to check it. {days} days left.',
@@ -151,6 +154,30 @@
       letterTitle: 'Your letter is ready',
     },
     friendly: {
+      startLead: 'A letter like this can sit in your stomach. That\'s normal.',
+      startTitle: 'We\'ll go through it together.',
+      startSub: 'Plain words. One bit at a time. No lawyer-speak.',
+      howTitle: 'What we do',
+      step1Title: 'Show the letter',
+      step1Text: 'Snap it in the frame – that\'s it.',
+      step2Title: 'We walk you through it',
+      step2Text: 'Each part of the form, in normal words.',
+      step3Title: 'You see what\'s next',
+      step3Text: 'What you can do, without the panic.',
+      takesTime: 'About 3 minutes. Promise.',
+      getStarted: 'Let\'s go',
+      startHint: 'A photo or a letter type – whatever is easier.',
+      chooseType: 'I\'d rather pick a letter type',
+      captureTitle: 'Show us the letter',
+      captureLead: 'Get the whole page in the frame. A photo from your gallery is fine too.',
+      cameraHint: 'Whole letter in the frame, please',
+      takePhoto: 'Take a photo',
+      uploadGallery: 'Pick one from the gallery',
+      orDivider: 'or',
+      letterTypeHeading: 'What kind of letter showed up?',
+      continueExample: 'Skip the photo – use the example form',
+      scanTitle: 'Having a look…',
+      scanSub: 'Finding the bits that matter',
       costHeadline: 'Ouch – that\'s CHF {yearly} a year. Let\'s see if that\'s even allowed.',
       costSub: 'That\'s CHF {monthly} extra every month.',
       countdown: '{days} days left until {date}. Plenty of time, but don\'t put it in the drawer.',
@@ -189,35 +216,35 @@
 
   const CONTACTS = [
     {
-      name: 'Tenancy Mediation Authority',
-      subtitle: 'Canton of Lucerne',
+      role: 'authority',
+      tag: 'Send your letter here',
+      name: 'Schlichtungsbehörde Miete und Pacht',
+      subtitle: 'Tenancy conciliation authority · Canton of Lucerne',
       address: 'Bahnhofstrasse 22, 6002 Lucerne',
       phoneLabel: 'Advice by phone',
       phone: '041 228 63 66',
       phoneHref: 'tel:0412286366',
       phoneNote: 'Tuesday and Thursday, 2–5 pm',
+      email: 'sb.miete+pacht@lu.ch',
       link: 'https://gerichte.lu.ch/organisation/schlichtungsbehoerden/miete_pacht',
       linkLabel: 'gerichte.lu.ch',
     },
     {
-      name: 'Tenants\' Association',
-      subtitle: 'Lucerne, Nidwalden, Obwalden, Uri',
-      address: 'Hertensteinstrasse 40, 6004 Lucerne',
+      role: 'advice',
+      tag: 'Advice only',
+      name: 'Tenants\' Association (Mieterverband)',
+      subtitle: 'Can advise you, but is not the authority for the contestation',
+      address: 'Industriestrasse 11, 6005 Lucerne',
       phoneLabel: 'Phone',
       phone: '041 220 10 22',
       phoneHref: 'tel:0412201022',
+      email: 'luzern@mieterverband.ch',
       link: 'https://www.mieterverband.ch/mietrecht/waehrend-der-miete/mietzinserhohung/',
       linkLabel: 'mieterverband.ch – Rent increases',
     },
   ]
 
   const AUTHORITY = CONTACTS[0]
-
-  const PROCESS_STEPS = [
-    { n: 1, title: 'Show your letter', text: 'Take a photo inside the frame.' },
-    { n: 2, title: 'Walk through sections', text: 'We guide you through each part of the form.' },
-    { n: 3, title: 'Next step', text: 'You see what you can do.' },
-  ]
 
   const state = {
     screen: SCREENS.START,
@@ -232,7 +259,6 @@
     cameraStream: null,
     focusActiveHotspot: false,
     tone: 'clear',
-    showBadges: true,
     oldRent: 1660,
     newRent: 1810,
     editNumbers: false,
@@ -242,6 +268,7 @@
     letterAddress: 'Wohnung 2a, Sonnenstrasse 2, 6014 Luzern',
     letterDate: '11.06.2026',
     copyHint: false,
+    letterContacts: false,
   }
 
   function screenTop() {
@@ -303,18 +330,8 @@
     if (!state.receiptDate) state.receiptDate = startOfToday()
   }
 
-  function badgesOn() {
-    return state.showBadges
-  }
-
-  function portfolioBadge(label) {
-    if (!badgesOn()) return ''
-    return '<span class="new-badge">' + label + '</span>'
-  }
-
   function toneBar() {
     const tones = [
-      { id: 'official', label: 'Official' },
       { id: 'clear', label: 'Clear' },
       { id: 'friendly', label: 'Friendly' },
     ]
@@ -326,9 +343,7 @@
     }).join('')
     return '<div class="tone-bar" role="group" aria-label="Tone of voice">' +
       '<div class="tone-bar__inner container">' +
-      '<div class="tone-bar__label-wrap">' +
-      portfolioBadge('NEW · Inspired by Webkinder') +
-      '<span class="tone-bar__label">Tone</span></div>' +
+      '<span class="tone-bar__label">Tone</span>' +
       '<div class="tone-switch">' + segs + '</div>' +
       '</div></div>'
   }
@@ -574,7 +589,50 @@
     return state.checkAnswers.lastChange === 'lt1' && state.checkAnswers.reason === 'clear'
   }
 
+  function letterGrounds() {
+    const a = state.checkAnswers
+    const grounds = []
+    const reasonWeak = a.reason === 'vague' || a.reason === 'no' || a.reason === 'unsure'
+    const noAnswers = !a.lastChange && !a.reason && !a.lowered
+
+    if (noAnswers || reasonWeak) {
+      grounds.push({
+        text: 'The justification given is too general. It does not clearly and specifically explain why the rent should rise and by how much. Such a justification is not sufficient.',
+        explain: 'the reasons given are too general',
+      })
+    }
+    if (a.lastChange === 'lt1') {
+      grounds.push({
+        text: 'The rent was last adjusted less than one year ago. A further increase so soon is not sufficiently substantiated.',
+        explain: 'the rent changed less than a year ago',
+      })
+    }
+    if (a.lowered === 'no') {
+      grounds.push({
+        text: 'To my knowledge the rent has never been reduced, even though costs or the reference interest rate may have fallen in the meantime.',
+        explain: 'the rent was never lowered',
+      })
+    }
+    if (!grounds.length) {
+      grounds.push({
+        text: 'I request a review of whether the notified increase is justified in amount and in law.',
+        explain: 'you asked for the increase to be reviewed',
+      })
+    }
+    return grounds
+  }
+
+  function letterExplainText() {
+    const bits = letterGrounds().map(function (g) { return g.explain })
+    if (bits.length === 1) {
+      return 'This short letter contests the increase because ' + bits[0] + ', and asks for a free hearing.'
+    }
+    const last = bits.pop()
+    return 'This short letter contests the increase because ' + bits.join(', ') + ' and ' + last + ', and asks for a free hearing.'
+  }
+
   function letterPlainText() {
+    const grounds = letterGrounds().map(function (g) { return g.text }).join('\n\n')
     return 'Schlichtungsbehörde Miete und Pacht\n' +
       'Bahnhofstrasse 22, 6002 Lucerne\n\n' +
       'Subject: Contestation of the rent increase\n\n' +
@@ -584,7 +642,7 @@
       ' as unfair. The rent is to be increased from CHF ' + formatChfCh(state.oldRent) +
       ' to CHF ' + formatChfCh(state.newRent) +
       ' per month.\n\n' +
-      'The justification given is too general. It does not clearly and specifically explain why the rent should rise and by how much. Such a justification is not sufficient.\n\n' +
+      grounds + '\n\n' +
       'Please schedule a conciliation hearing.\n\n' +
       'Yours sincerely\n' +
       state.letterName + '\n\n' +
@@ -682,9 +740,6 @@
     return '<footer class="trust-footer" role="contentinfo">' +
       '<p><strong>Your data stays on your device.</strong></p>' +
       '<p>Your photo is not saved or sent anywhere. This site offers guidance, not legal advice.</p>' +
-      '<label class="badge-toggle"><input type="checkbox" data-action="toggle-badges"' +
-      (state.showBadges ? ' checked' : '') +
-      ' /> Show portfolio badges</label>' +
       '</footer>'
   }
 
@@ -765,19 +820,23 @@
   }
 
   function renderStart() {
-    const steps = PROCESS_STEPS.map(function (s) {
+    const steps = [
+      { n: 1, title: t('step1Title'), text: t('step1Text') },
+      { n: 2, title: t('step2Title'), text: t('step2Text') },
+      { n: 3, title: t('step3Title'), text: t('step3Text') },
+    ].map(function (s) {
       return '<li class="process-step"><span class="step-num" aria-hidden="true">' + s.n + '</span>' +
-        '<div><p class="heading-sm">' + s.title + '</p><p class="lead">' + s.text + '</p></div></li>'
+        '<div><p class="heading-sm">' + escapeHtml(s.title) + '</p><p class="lead">' + escapeHtml(s.text) + '</p></div></li>'
     }).join('')
     return wrapPage('<main class="main"><div class="container">' + heroIcon() +
-      '<p class="lead mb-3">An official letter can feel unsettling. That is understandable.</p>' +
-      pageTitle('We help you understand it.', 'heading-xl mb-5') +
-      '<p class="lead mb-8">In plain language. Section by section. No legal jargon.</p>' +
-      '<section class="card mb-10"><h2 class="heading-sm">How it works</h2><ol class="process-steps">' + steps + '</ol>' +
-      '<p class="text-muted mt-3">Takes about 3 minutes.</p></section>' +
-      '<button type="button" class="btn btn-primary" data-action="go-capture">Get started</button>' +
-      '<p class="text-muted text-center mt-3">Take a photo or choose a letter type</p>' +
-      '<div class="text-center mt-5"><button type="button" class="btn-link" data-action="go-capture">Choose letter type instead</button></div>' +
+      '<p class="lead mb-3">' + escapeHtml(t('startLead')) + '</p>' +
+      pageTitle(escapeHtml(t('startTitle')), 'heading-xl mb-5') +
+      '<p class="lead mb-8">' + escapeHtml(t('startSub')) + '</p>' +
+      '<section class="card mb-10"><h2 class="heading-sm">' + escapeHtml(t('howTitle')) + '</h2><ol class="process-steps">' + steps + '</ol>' +
+      '<p class="text-muted mt-3">' + escapeHtml(t('takesTime')) + '</p></section>' +
+      '<button type="button" class="btn btn-primary" data-action="go-capture">' + escapeHtml(t('getStarted')) + '</button>' +
+      '<p class="text-muted text-center mt-3">' + escapeHtml(t('startHint')) + '</p>' +
+      '<div class="text-center mt-5"><button type="button" class="btn-link" data-action="go-capture">' + escapeHtml(t('chooseType')) + '</button></div>' +
       '</div></main>')
   }
 
@@ -786,19 +845,19 @@
       return '<li><button type="button" class="btn-list" data-action="select-type" data-type="' + t.id + '">' + t.label + '</button></li>'
     }).join('')
     return wrapPage('<main class="main"><div class="container">' + backButton() +
-      pageTitle('Photograph your letter', 'heading-lg mb-3') +
-      '<p class="lead mb-6">Place the whole letter inside the frame. You can also upload a photo from your gallery.</p>' +
+      pageTitle(escapeHtml(t('captureTitle')), 'heading-lg mb-3') +
+      '<p class="lead mb-6">' + escapeHtml(t('captureLead')) + '</p>' +
       '<div class="camera-stage">' +
-      '<p class="camera-hint">Place the whole letter inside the frame</p>' +
+      '<p class="camera-hint">' + escapeHtml(t('cameraHint')) + '</p>' +
       '<div class="camera-frame" aria-hidden="true"></div></div>' +
       '<input type="file" accept="image/*" capture="environment" class="file-input" id="photo-input" data-action="photo-input" />' +
       '<input type="file" accept="image/*" class="file-input" id="gallery-input" data-action="photo-input" />' +
-      '<button type="button" class="btn btn-primary" data-action="take-photo">Take photo</button>' +
-      '<button type="button" class="btn btn-secondary mt-3" data-action="trigger-gallery">Upload from gallery</button>' +
-      '<div class="divider"><div class="divider__line"></div><span class="text-muted">or</span><div class="divider__line"></div></div>' +
-      '<h2 class="heading-md">What kind of letter did you receive?</h2>' +
+      '<button type="button" class="btn btn-primary" data-action="take-photo">' + escapeHtml(t('takePhoto')) + '</button>' +
+      '<button type="button" class="btn btn-secondary mt-3" data-action="trigger-gallery">' + escapeHtml(t('uploadGallery')) + '</button>' +
+      '<div class="divider"><div class="divider__line"></div><span class="text-muted">' + escapeHtml(t('orDivider')) + '</span><div class="divider__line"></div></div>' +
+      '<h2 class="heading-md">' + escapeHtml(t('letterTypeHeading')) + '</h2>' +
       '<ul class="type-list" role="list">' + types + '</ul>' +
-      '<p class="text-center mt-6"><button type="button" class="btn-link" data-action="use-reference">Continue with example form (no photo)</button></p>' +
+      '<p class="text-center mt-6"><button type="button" class="btn-link" data-action="use-reference">' + escapeHtml(t('continueExample')) + '</button></p>' +
       '</div></main>')
   }
 
@@ -810,8 +869,8 @@
       '<img src="' + src + '" alt="" />' +
       '<div class="scan-line" aria-hidden="true"></div>' +
       '</div>' +
-      '<p class="scan-title" role="status" aria-live="polite">Scanning your letter…</p>' +
-      '<p class="text-muted">Finding the sections on your form</p>' +
+      '<p class="scan-title" role="status" aria-live="polite">' + escapeHtml(t('scanTitle')) + '</p>' +
+      '<p class="text-muted">' + escapeHtml(t('scanSub')) + '</p>' +
       '</div></main>',
       '',
       'page--scan'
@@ -833,7 +892,6 @@
       '<main class="main"><div class="container portfolio-block">' +
       backButton() +
       '<div class="new-panel">' +
-      portfolioBadge('NEW · Inspired by Conny') +
       '<h1 id="page-title" class="cost-headline" data-page-title>' + costHeadlineHtml() + '</h1>' +
       '<p class="cost-sub" id="cost-sub">' + escapeHtml(t('costSub', { monthly: monthly, yearly: yearly })) + '</p>' +
       '</div>' +
@@ -841,8 +899,8 @@
       '<p class="text-center"><button type="button" class="btn-link" data-action="toggle-edit-numbers">Numbers not right? Edit</button></p>' +
       edit +
       '<div class="btn-stack mt-8">' +
-      '<button type="button" class="btn btn-new" data-action="go-check">' + escapeHtml(t('costCta')) + '</button>' +
-      '<button type="button" class="btn-link" data-action="go-tour">' + escapeHtml(t('costSkip')) + '</button>' +
+      '<button type="button" class="btn btn-primary" data-action="go-check">' + escapeHtml(t('costCta')) + '</button>' +
+      '<button type="button" class="btn btn-primary" data-action="go-tour">' + escapeHtml(t('costSkip')) + '</button>' +
       '</div></div></main>'
     )
   }
@@ -861,7 +919,6 @@
       '<main class="main"><div class="container portfolio-block">' +
       backButton('check-back') +
       '<div class="new-panel">' +
-      portfolioBadge('NEW · Inspired by Mieterverband') +
       '<p class="check-progress" aria-live="polite">' + n + ' of ' + total + '</p>' +
       pageTitle(t(qKey), 'heading-lg mb-6') +
       '<div class="choice-stack" role="group" aria-label="Answers">' + options + '</div>' +
@@ -877,14 +934,13 @@
       '<main class="main"><div class="container portfolio-block">' +
       backButton() +
       '<div class="new-panel">' +
-      portfolioBadge('NEW · Inspired by Mieterverband') +
       '<article class="traffic-card' + (yellow ? ' traffic-card--yellow' : ' traffic-card--orange') + '">' +
       pageTitle(title, 'traffic-card__title') +
       '<p class="traffic-card__text">' + escapeHtml(text) + '</p>' +
       '</article>' +
       '<p class="proto-note">Prototype logic, simplified. Not legal advice.</p>' +
       '<div class="btn-stack mt-8">' +
-      '<button type="button" class="btn btn-new" data-action="go-letter">' + escapeHtml(t('resultLetterCta')) + '</button>' +
+      '<button type="button" class="btn btn-primary" data-action="go-letter">' + escapeHtml(t('resultLetterCta')) + '</button>' +
       '<button type="button" class="btn btn-secondary" data-action="go-tour">' + escapeHtml(t('resultTourCta')) + '</button>' +
       '</div></div></div></main>'
     )
@@ -896,6 +952,9 @@
       ? '<p class="letter-deadline">Deadline: ' + formatDate(deadlineEnd) + '</p>'
       : '<p class="letter-deadline">You have 30 days from receipt.</p>'
     const copyMsg = state.copyHint ? '<p class="status-msg" role="status">Letter text copied.</p>' : ''
+    const groundsHtml = letterGrounds().map(function (g) {
+      return '<p>' + escapeHtml(g.text) + '</p>'
+    }).join('')
     const sheet =
       '<article class="letter-sheet" id="letter-sheet">' +
       '<p class="letter-meta">Schlichtungsbehörde Miete und Pacht<br>Bahnhofstrasse 22, 6002 Lucerne</p>' +
@@ -910,7 +969,7 @@
       ' to CHF ' +
       '<span class="letter-fill" id="letter-fill-new">' + escapeHtml(formatChfCh(state.newRent)) + '</span>' +
       ' per month.</p>' +
-      '<p>The justification given is too general. It does not clearly and specifically explain why the rent should rise and by how much. Such a justification is not sufficient.</p>' +
+      groundsHtml +
       '<p>Please schedule a conciliation hearing.</p>' +
       '<p>Yours sincerely</p>' +
       '<p><span class="letter-fill" id="letter-fill-name">' + escapeHtml(state.letterName) + '</span></p>' +
@@ -920,7 +979,6 @@
       '<main class="main"><div class="container portfolio-block">' +
       backButton() +
       '<div class="new-panel">' +
-      portfolioBadge('NEW · Inspired by Conny') +
       pageTitle(t('letterTitle'), 'heading-lg mb-3') +
       '<p class="lead mb-6">' + escapeHtml(t('letterIntro')) + '</p>' +
       '</div>' +
@@ -933,17 +991,29 @@
       '<input id="letter-date" type="text" class="field-input" value="' + escapeHtml(state.letterDate) + '" data-action="letter-date" />' +
       '</div>' +
       sheet +
-      '<p class="letter-explain">This short letter contests the increase because the reasons given are too general, and asks for a free hearing.</p>' +
+      '<p class="letter-explain">' + escapeHtml(letterExplainText()) + '</p>' +
       copyMsg +
       '<div class="btn-stack mt-6">' +
-      '<button type="button" class="btn btn-new" data-action="print-letter">Print or save as PDF</button>' +
+      '<button type="button" class="btn btn-primary" data-action="print-letter">Print or save as PDF</button>' +
       '<button type="button" class="btn btn-secondary" data-action="copy-letter">Copy text</button>' +
       '</div>' +
       '<ol class="letter-steps" aria-label="What you do next">' +
       '<li><strong>1 Sign</strong></li>' +
-      '<li><strong>2 Send by registered mail</strong></li>' +
+      '<li><strong>2 Send it to the Schlichtungsbehörde by registered mail</strong></li>' +
       '<li><strong>3 Done – it\'s free</strong></li>' +
       '</ol>' +
+      '<div class="btn-stack mt-6">' +
+      '<button type="button" class="btn btn-secondary" data-action="toggle-letter-contacts">' +
+      (state.letterContacts ? 'Hide contact points' : 'Show contact points') +
+      '</button>' +
+      '</div>' +
+      (state.letterContacts
+        ? '<div class="letter-contacts" id="letter-contacts">' +
+          '<h2 class="heading-md">Where to send it</h2>' +
+          '<p class="lead mb-6">The Schlichtungsbehörde is the office that receives the contestation. The Tenants\' Association can advise you.</p>' +
+          contactCardsHtml() +
+          '</div>'
+        : '') +
       deadlineLine +
       '</div></main>'
     )
@@ -997,29 +1067,44 @@
     )
   }
 
+  function contactCardsHtml() {
+    return CONTACTS.map(function (c) {
+      const phoneNote = c.phoneNote ? ', ' + c.phoneNote : ''
+      const roleClass = c.role === 'authority' ? ' contact-card--send' : ' contact-card--advice'
+      const tag = c.tag ? '<p class="contact-card__tag">' + escapeHtml(c.tag) + '</p>' : ''
+      const email = c.email
+        ? '<dt>Email</dt><dd><a class="link" href="mailto:' + encodeURIComponent(c.email).replace('%40', '@') + '">' +
+          escapeHtml(c.email) + '</a></dd>'
+        : ''
+      return '<article class="card contact-card' + roleClass + '">' + tag +
+        '<h3>' + escapeHtml(c.name) + '</h3><p class="subtitle">' + escapeHtml(c.subtitle) + '</p>' +
+        '<dl><dt>Address</dt><dd>' + escapeHtml(c.address) + '</dd>' +
+        '<dt>' + escapeHtml(c.phoneLabel) + '</dt><dd><a class="link" href="' + c.phoneHref + '">' +
+        escapeHtml(c.phone) + '</a>' + escapeHtml(phoneNote) + '</dd>' +
+        email +
+        '<dt>Online</dt><dd><a class="link" href="' + c.link + '" target="_blank" rel="noopener">' +
+        escapeHtml(c.linkLabel) +
+        '<span class="sr-only"> (opens on an external website)</span></a></dd></dl></article>'
+    }).join('')
+  }
+
   function renderActions() {
     const deadlineEnd = getDeadlineEnd()
     const steps = ACTION_STEPS.map(function (s) {
       return '<li class="process-step"><span class="step-num step-num--accent" aria-hidden="true">' + s.n + '</span>' +
         '<div><h2 class="heading-sm">' + s.title + '</h2><p>' + s.text + '</p></div></li>'
     }).join('')
-    const contacts = CONTACTS.map(function (c) {
-      const phoneNote = c.phoneNote ? ', ' + c.phoneNote : ''
-      return '<article class="card contact-card"><h3>' + c.name + '</h3><p class="subtitle">' + c.subtitle + '</p>' +
-        '<dl><dt>Address</dt><dd>' + c.address + '</dd>' +
-        '<dt>' + c.phoneLabel + '</dt><dd><a class="link" href="' + c.phoneHref + '">' + c.phone + '</a>' + phoneNote + '</dd>' +
-        '<dt>Online</dt><dd><a class="link" href="' + c.link + '" target="_blank" rel="noopener">' + c.linkLabel +
-        '<span class="sr-only"> (opens on an external website)</span></a></dd></dl></article>'
-    }).join('')
+    const contacts = contactCardsHtml()
     return wrapPage(
       '<main class="main"><div class="container">' + backButton() +
       pageTitle('What can I do now?', 'heading-lg mb-8') +
       '<div class="new-panel mb-8">' +
-      portfolioBadge('NEW · Inspired by Conny') +
-      '<button type="button" class="btn btn-new" data-action="go-letter">' + escapeHtml(t('resultLetterCta')) + '</button>' +
+      '<button type="button" class="btn btn-primary" data-action="go-letter">' + escapeHtml(t('resultLetterCta')) + '</button>' +
       '</div>' +
       '<ol class="steps-list">' + steps + '</ol>' +
-      '<h2 class="heading-md">Where to get help</h2><div class="mb-10">' + contacts + '</div>' +
+      '<h2 class="heading-md">Where to get help</h2>' +
+      '<p class="lead mb-6">Send the contestation to the Schlichtungsbehörde. The Tenants\' Association is for advice.</p>' +
+      '<div class="mb-10">' + contacts + '</div>' +
       '<div class="card-highlight mb-8"><p>You are not alone with this, and you do not have to sign anything right away.</p></div>' +
       '<button type="button" class="btn btn-secondary" data-action="restart-tour">Walk through sections again</button>' +
       '</div></main>',
@@ -1044,7 +1129,6 @@
     const shouldScroll = state.scrollAfterRender
     state.scrollAfterRender = true
 
-    document.body.classList.toggle('badges-off', !state.showBadges)
     document.body.classList.toggle('print-letter', false)
 
     switch (state.screen) {
@@ -1119,11 +1203,13 @@
         navigate(SCREENS.LETTER)
         break
       case 'check-answer': submitCheckAnswer(btn.getAttribute('data-value')); break
-      case 'set-tone':
-        state.tone = btn.getAttribute('data-tone') || 'clear'
+      case 'set-tone': {
+        const next = btn.getAttribute('data-tone')
+        state.tone = next === 'friendly' ? 'friendly' : 'clear'
         state.scrollAfterRender = false
         render()
         break
+      }
       case 'toggle-edit-numbers':
         state.editNumbers = !state.editNumbers
         state.scrollAfterRender = false
@@ -1131,6 +1217,15 @@
         break
       case 'print-letter': printLetter(); break
       case 'copy-letter': copyLetter(); break
+      case 'toggle-letter-contacts':
+        state.letterContacts = !state.letterContacts
+        state.scrollAfterRender = false
+        render()
+        if (state.letterContacts) {
+          const box = document.getElementById('letter-contacts')
+          if (box && box.scrollIntoView) box.scrollIntoView({ block: 'nearest' })
+        }
+        break
       case 'restart-tour':
         state.tourIndex = 0
         navigate(SCREENS.TOUR)
@@ -1158,17 +1253,6 @@
     if (el.getAttribute('data-action') === 'date-change') {
       state.receiptDate = parseDateInput(el.value) || startOfToday()
       state.savedHint = false
-      state.scrollAfterRender = false
-      render()
-    }
-    if (el.getAttribute('data-action') === 'toggle-badges') {
-      state.showBadges = el.checked
-      try {
-        const url = new URL(window.location.href)
-        if (state.showBadges) url.searchParams.delete('badges')
-        else url.searchParams.set('badges', 'off')
-        history.replaceState({}, '', url)
-      } catch (err) { /* ignore */ }
       state.scrollAfterRender = false
       render()
     }
@@ -1202,11 +1286,6 @@
   })
 
   loadDeadline()
-  try {
-    if (new URLSearchParams(window.location.search).get('badges') === 'off') {
-      state.showBadges = false
-    }
-  } catch (err) { /* ignore */ }
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
   window.addEventListener('pagehide', stopCamera)
   render()

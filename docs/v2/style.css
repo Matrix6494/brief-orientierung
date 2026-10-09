@@ -433,6 +433,29 @@ body {
 .contact-card { margin-bottom: 1rem; }
 .contact-card:last-child { margin-bottom: 0; }
 
+.contact-card--send {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.contact-card__tag {
+  display: inline-block;
+  margin: 0 0 0.65rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.contact-card--advice .contact-card__tag {
+  background: var(--warm-100);
+  color: var(--accent);
+}
+
 .contact-card h3 {
   margin: 0 0 0.25rem;
   font-size: 1.125rem;
@@ -711,13 +734,7 @@ a.link {
   color: var(--accent);
 }
 
-/* Portfolio prototype additions */
-:root {
-  --new: #ffd60a;
-  --new-ink: #111111;
-  --new-orange: #ff8a3d;
-}
-
+/* Flow additions */
 .sticky-stack {
   position: sticky;
   top: 0;
@@ -729,9 +746,9 @@ a.link {
 }
 
 .tone-bar {
-  background: var(--new);
-  color: var(--new-ink);
-  border-bottom: 3px solid var(--new-ink);
+  background: #fff;
+  color: var(--warm-900);
+  border-bottom: 1px solid var(--warm-200);
 }
 
 .tone-bar__inner {
@@ -740,28 +757,23 @@ a.link {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  padding: 0.55rem 0;
-}
-
-.tone-bar__label-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  min-width: 0;
+  padding: 0.55rem 1.25rem;
 }
 
 .tone-bar__label {
   font-size: 0.75rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  color: var(--muted);
 }
 
 .tone-switch {
   display: flex;
   flex: 1;
   min-width: 12rem;
-  border: 2px solid var(--new-ink);
+  border: 2px solid var(--warm-200);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
@@ -771,53 +783,20 @@ a.link {
   padding: 0.35rem 0.4rem;
   border: none;
   background: transparent;
-  color: var(--new-ink);
+  color: var(--warm-800);
   font-family: inherit;
   font-size: 0.8125rem;
-  font-weight: 800;
+  font-weight: 600;
   cursor: pointer;
 }
 
 .tone-seg + .tone-seg {
-  border-left: 2px solid var(--new-ink);
+  border-left: 2px solid var(--warm-200);
 }
 
 .tone-seg.is-active {
-  background: var(--new-ink);
-  color: var(--new);
-}
-
-.new-badge {
-  display: inline-block;
-  padding: 0.15rem 0.45rem;
-  border-radius: 999px;
-  background: var(--new-ink);
-  color: var(--new);
-  font-size: 0.625rem;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.badges-off .new-badge {
-  display: none;
-}
-
-.badge-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: 0.85rem;
-  font-size: 0.875rem;
-  color: var(--warm-900);
-  cursor: pointer;
-}
-
-.badge-toggle input {
-  width: 1.15rem;
-  height: 1.15rem;
+  background: var(--primary);
+  color: #fff;
 }
 
 .portfolio-block .new-panel {
@@ -825,83 +804,63 @@ a.link {
   margin-bottom: 1.25rem;
 }
 
-.portfolio-block .new-panel > .new-badge {
-  margin-bottom: 0.65rem;
-}
-
-.btn-new {
-  background: var(--new);
-  color: var(--new-ink);
-  border: 3px solid var(--new-ink);
-  font-weight: 800;
-  font-size: 1.2rem;
-  min-height: 3.75rem;
-}
-
-.btn-new:hover {
-  background: #ffe566;
-}
-
 .cost-headline {
   margin: 0 0 0.75rem;
   font-size: clamp(1.65rem, 7vw, 2.6rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.15;
-  color: var(--new-ink);
+  color: var(--warm-900);
 }
 
 .cost-amount {
   display: inline-block;
   padding: 0.05em 0.2em;
-  background: var(--new);
-  box-shadow: 0.2em 0 0 var(--new), -0.2em 0 0 var(--new);
+  background: var(--primary-light);
+  box-shadow: 0.2em 0 0 var(--primary-light), -0.2em 0 0 var(--primary-light);
+  color: var(--accent);
 }
 
 .cost-sub {
   margin: 0;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--warm-900);
 }
 
 .countdown-block {
   margin: 1.25rem 0;
   padding: 1.1rem 1.15rem;
-  background: var(--new);
-  color: var(--new-ink);
-  border: 3px solid var(--new-ink);
+  background: var(--primary-light);
+  color: var(--warm-900);
+  border: 1px solid var(--warm-200);
+  border-radius: var(--radius-lg);
 }
 
 .countdown-block__kicker {
   margin: 0 0 0.35rem;
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
+  color: var(--accent);
 }
 
 .countdown-block__msg {
   margin: 0 0 0.85rem;
   font-size: 1.2rem;
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.3;
 }
 
-.countdown-block .field-label,
 .countdown-block .field-input {
-  color: var(--new-ink);
-}
-
-.countdown-block .field-input {
-  border-color: var(--new-ink);
   margin-bottom: 0;
 }
 
 .check-progress {
   margin: 0 0 0.5rem;
   font-size: 0.95rem;
-  font-weight: 800;
-  color: var(--new-ink);
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .choice-stack {
@@ -914,58 +873,62 @@ a.link {
   display: flex;
   align-items: center;
   width: 100%;
-  min-height: 3.6rem;
+  min-height: 3.5rem;
   padding: 0.9rem 1.1rem;
-  border: 3px solid var(--new-ink);
+  border: 2px solid var(--warm-200);
+  border-radius: var(--radius-lg);
   background: #fff;
-  color: var(--new-ink);
+  color: var(--warm-900);
   font-family: inherit;
   font-size: 1.125rem;
-  font-weight: 700;
+  font-weight: 600;
   text-align: left;
   cursor: pointer;
 }
 
 .btn-choice.is-selected,
 .btn-choice:hover {
-  background: var(--new);
+  background: var(--primary-light);
+  border-color: var(--primary);
 }
 
 .traffic-card {
   padding: 1.35rem 1.2rem;
-  border: 3px solid var(--new-ink);
+  border: 1px solid var(--warm-200);
+  border-radius: var(--radius-lg);
   margin-bottom: 0.85rem;
+  background: #fff;
 }
 
 .traffic-card--yellow {
-  background: var(--new);
-  color: var(--new-ink);
+  background: var(--primary-light);
+  color: var(--warm-900);
 }
 
 .traffic-card--orange {
-  background: var(--new-orange);
-  color: var(--new-ink);
+  background: #fff;
+  border-color: var(--accent);
+  color: var(--warm-900);
 }
 
 .traffic-card__title {
   margin: 0 0 0.6rem;
   font-size: clamp(1.5rem, 6vw, 2.2rem);
-  font-weight: 800;
+  font-weight: 700;
   line-height: 1.15;
 }
 
 .traffic-card__text {
   margin: 0;
   font-size: 1.2rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.4;
 }
 
 .proto-note {
   margin: 0 0 1rem;
   font-size: 0.9rem;
-  font-weight: 700;
-  color: var(--warm-800);
+  color: var(--muted);
 }
 
 .letter-fields {
@@ -977,9 +940,9 @@ a.link {
   padding: 1.5rem 1.25rem 1.75rem;
   margin-bottom: 0.85rem;
   border: 1px solid var(--warm-200);
-  box-shadow: 0 14px 36px rgba(17, 17, 17, 0.12);
+  box-shadow: 0 8px 24px rgba(27, 42, 53, 0.08);
   font-family: Georgia, "Noto Sans", serif;
-  color: var(--new-ink);
+  color: var(--warm-900);
   line-height: 1.55;
 }
 
@@ -996,8 +959,8 @@ a.link {
 }
 
 .letter-fill {
-  background: var(--new);
-  color: var(--new-ink);
+  background: var(--primary-light);
+  color: var(--accent);
   font-weight: 700;
   padding: 0 0.15em;
 }
@@ -1007,7 +970,7 @@ a.link {
   width: 12rem;
   height: 2.25rem;
   margin-top: 0.35rem;
-  border-bottom: 1px solid var(--new-ink);
+  border-bottom: 1px solid var(--warm-200);
 }
 
 .letter-explain {
@@ -1017,33 +980,40 @@ a.link {
 }
 
 .letter-steps {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
   list-style: none;
-  margin: 1.5rem 0 0.75rem;
-  padding: 0.9rem;
-  background: var(--new);
-  border: 3px solid var(--new-ink);
-  color: var(--new-ink);
-  font-weight: 700;
+  margin: 1.5rem 0 0;
+  padding: 0.9rem 1.1rem;
+  background: var(--primary-light);
+  border: 1px solid var(--warm-200);
+  border-radius: var(--radius-lg);
+  color: var(--warm-900);
+  font-weight: 600;
+}
+
+.letter-steps li {
+  line-height: 1.4;
+}
+
+.letter-contacts {
+  margin: 1rem 0 1.25rem;
+}
+
+.letter-contacts .heading-md {
+  margin-top: 0.5rem;
 }
 
 .letter-deadline {
   margin: 0;
   font-size: 1rem;
-  font-weight: 800;
+  font-weight: 700;
+  color: var(--accent);
 }
 
 .number-edit {
   margin-top: 0.75rem;
-}
-
-@media (min-width: 520px) {
-  .letter-steps {
-    grid-template-columns: 1fr 1fr 1fr;
-    text-align: center;
-  }
 }
 
 @media print {
@@ -1054,8 +1024,8 @@ a.link {
   .letter-explain,
   .btn-stack,
   .letter-steps,
+  .letter-contacts,
   .letter-deadline,
-  .new-badge,
   .status-msg,
   .tone-bar,
   .deadline-banner {

@@ -63,7 +63,7 @@ body {
 }
 
 [data-page-title] {
-  scroll-margin-top: 0 !important;
+  scroll-margin-top: 5.75rem !important;
 }
 
 :focus-visible {
@@ -433,6 +433,29 @@ body {
 .contact-card { margin-bottom: 1rem; }
 .contact-card:last-child { margin-bottom: 0; }
 
+.contact-card--send {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.contact-card__tag {
+  display: inline-block;
+  margin: 0 0 0.65rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.contact-card--advice .contact-card__tag {
+  background: var(--warm-100);
+  color: var(--accent);
+}
+
 .contact-card h3 {
   margin: 0 0 0.25rem;
   font-size: 1.125rem;
@@ -709,4 +732,321 @@ a.link {
 
 .tour-text--watch .heading-sm {
   color: var(--accent);
+}
+
+/* Flow additions */
+.sticky-stack {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+}
+
+.sticky-stack .deadline-banner {
+  position: static;
+}
+
+.tone-bar {
+  background: #fff;
+  color: var(--warm-900);
+  border-bottom: 1px solid var(--warm-200);
+}
+
+.tone-bar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.55rem 1.25rem;
+}
+
+.tone-bar__label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.tone-switch {
+  display: flex;
+  flex: 1;
+  min-width: 12rem;
+  border: 2px solid var(--warm-200);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.tone-seg {
+  flex: 1;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.4rem;
+  border: none;
+  background: transparent;
+  color: var(--warm-800);
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tone-seg + .tone-seg {
+  border-left: 2px solid var(--warm-200);
+}
+
+.tone-seg.is-active {
+  background: var(--primary);
+  color: #fff;
+}
+
+.portfolio-block .new-panel {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+
+.cost-headline {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.65rem, 7vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--warm-900);
+}
+
+.cost-amount {
+  display: inline-block;
+  padding: 0.05em 0.2em;
+  background: var(--primary-light);
+  box-shadow: 0.2em 0 0 var(--primary-light), -0.2em 0 0 var(--primary-light);
+  color: var(--accent);
+}
+
+.cost-sub {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--warm-900);
+}
+
+.countdown-block {
+  margin: 1.25rem 0;
+  padding: 1.1rem 1.15rem;
+  background: var(--primary-light);
+  color: var(--warm-900);
+  border: 1px solid var(--warm-200);
+  border-radius: var(--radius-lg);
+}
+
+.countdown-block__kicker {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.countdown-block__msg {
+  margin: 0 0 0.85rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.countdown-block .field-input {
+  margin-bottom: 0;
+}
+
+.check-progress {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.choice-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.btn-choice {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.9rem 1.1rem;
+  border: 2px solid var(--warm-200);
+  border-radius: var(--radius-lg);
+  background: #fff;
+  color: var(--warm-900);
+  font-family: inherit;
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.btn-choice.is-selected,
+.btn-choice:hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.traffic-card {
+  padding: 1.35rem 1.2rem;
+  border: 1px solid var(--warm-200);
+  border-radius: var(--radius-lg);
+  margin-bottom: 0.85rem;
+  background: #fff;
+}
+
+.traffic-card--yellow {
+  background: var(--primary-light);
+  color: var(--warm-900);
+}
+
+.traffic-card--orange {
+  background: #fff;
+  border-color: var(--accent);
+  color: var(--warm-900);
+}
+
+.traffic-card__title {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.5rem, 6vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.traffic-card__text {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.proto-note {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.letter-fields {
+  margin-bottom: 1rem;
+}
+
+.letter-sheet {
+  background: #fff;
+  padding: 1.5rem 1.25rem 1.75rem;
+  margin-bottom: 0.85rem;
+  border: 1px solid var(--warm-200);
+  box-shadow: 0 8px 24px rgba(27, 42, 53, 0.08);
+  font-family: Georgia, "Noto Sans", serif;
+  color: var(--warm-900);
+  line-height: 1.55;
+}
+
+.letter-sheet p {
+  margin: 0 0 0.85rem;
+}
+
+.letter-meta {
+  font-size: 0.95rem;
+}
+
+.letter-subject {
+  margin-bottom: 1.1rem;
+}
+
+.letter-fill {
+  background: var(--primary-light);
+  color: var(--accent);
+  font-weight: 700;
+  padding: 0 0.15em;
+}
+
+.letter-sign-line {
+  display: block;
+  width: 12rem;
+  height: 2.25rem;
+  margin-top: 0.35rem;
+  border-bottom: 1px solid var(--warm-200);
+}
+
+.letter-explain {
+  margin: 0 0 1rem;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.letter-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0.9rem 1.1rem;
+  background: var(--primary-light);
+  border: 1px solid var(--warm-200);
+  border-radius: var(--radius-lg);
+  color: var(--warm-900);
+  font-weight: 600;
+}
+
+.letter-steps li {
+  line-height: 1.4;
+}
+
+.letter-contacts {
+  margin: 1rem 0 1.25rem;
+}
+
+.letter-contacts .heading-md {
+  margin-top: 0.5rem;
+}
+
+.letter-deadline {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.number-edit {
+  margin-top: 0.75rem;
+}
+
+@media print {
+  .sticky-stack,
+  .btn-back,
+  .trust-footer,
+  .letter-fields,
+  .letter-explain,
+  .btn-stack,
+  .letter-steps,
+  .letter-contacts,
+  .letter-deadline,
+  .status-msg,
+  .tone-bar,
+  .deadline-banner {
+    display: none !important;
+  }
+
+  body.print-letter * {
+    visibility: hidden;
+  }
+
+  body.print-letter .letter-sheet,
+  body.print-letter .letter-sheet * {
+    visibility: visible;
+  }
+
+  body.print-letter .letter-sheet {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    box-shadow: none;
+    border: none;
+  }
 }
