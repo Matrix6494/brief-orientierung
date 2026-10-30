@@ -1026,7 +1026,7 @@
     const isRef = state.useReferenceImage || !state.croppedPhotoUrl
     const refNote = isRef ? '<p class="tour-ref-note">Showing the official example form. Your letter may look slightly different.</p>' : ''
 
-    return wrapPage('<main class="main"><div class="container">' + backButton('tour-back') +
+    return wrapPage('<main class="main"><div class="container container--tour">' + backButton('tour-back') +
       '<p class="tour-progress" aria-live="polite">Section <strong>' + n + '</strong> of <strong>' + total + '</strong></p>' +
       pageTitle(section.title, 'heading-lg mb-4') +
       renderTourHighlight(state.tourIndex) +
